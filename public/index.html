@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -12,10 +13,6 @@
     <title>Marc — Assistant IA | Collège Saint-Pierre</title>
 
     <style>
-
-        /* =========================================
-           VARIABLES
-        ========================================= */
 
         :root {
             --primary-color: #3157d5;
@@ -35,9 +32,9 @@
         }
 
 
-        /* =========================================
+        /* =========================
            RESET
-        ========================================= */
+        ========================= */
 
         * {
             box-sizing: border-box;
@@ -46,9 +43,16 @@
         }
 
 
-        /* =========================================
+        /* =========================
            PAGE
-        ========================================= */
+        ========================= */
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
 
         body {
             font-family:
@@ -65,7 +69,7 @@
 
             color: var(--text-color);
 
-            background: #f5f7fb;
+            background: var(--light-bg);
 
             max-width: 1000px;
 
@@ -75,9 +79,9 @@
         }
 
 
-        /* =========================================
-           EN-TÊTE MARC
-        ========================================= */
+        /* =========================
+           EN-TÊTE DE MARC
+        ========================= */
 
         .sp-chat-header {
             text-align: center;
@@ -87,8 +91,6 @@
             margin-bottom: 20px;
 
             border-bottom: 1px solid var(--border-color);
-
-            background: transparent;
         }
 
 
@@ -104,11 +106,11 @@
         .sp-chat-header h1 {
             margin: 0;
 
+            color: var(--primary-color);
+
             font-size: 2rem;
 
             line-height: 1.2;
-
-            color: var(--primary-color);
 
             font-weight: 700;
         }
@@ -117,15 +119,15 @@
         .sp-chat-header p {
             margin-top: 6px;
 
-            font-size: 1.05rem;
-
             color: var(--text-light);
+
+            font-size: 1.05rem;
         }
 
 
-        /* =========================================
+        /* =========================
            CONTENEUR DU CHAT
-        ========================================= */
+        ========================= */
 
         .chat-container {
             display: flex;
@@ -149,9 +151,9 @@
         }
 
 
-        /* =========================================
-           ZONE DES MESSAGES
-        ========================================= */
+        /* =========================
+           MESSAGES
+        ========================= */
 
         .chat-messages {
             flex: 1;
@@ -174,7 +176,7 @@
         }
 
 
-        /* Barre de défilement Chrome / Edge / Firefox */
+        /* Barre de défilement */
 
         .chat-messages::-webkit-scrollbar {
             width: 12px;
@@ -200,9 +202,9 @@
         }
 
 
-        /* =========================================
+        /* =========================
            MESSAGES
-        ========================================= */
+        ========================= */
 
         .message {
             margin-bottom: 15px;
@@ -218,9 +220,9 @@
 
 
         .message p {
-            white-space: pre-line;
-
             margin: 0;
+
+            white-space: pre-line;
 
             overflow-wrap: anywhere;
         }
@@ -252,20 +254,20 @@
         }
 
 
-        /* =========================================
-           INDICATEUR DE RÉPONSE
-        ========================================= */
+        /* =========================
+           INDICATEUR
+        ========================= */
 
         .typing-indicator {
             display: none;
 
             padding: 10px 20px;
 
-            font-style: italic;
+            background: var(--light-bg);
 
             color: var(--text-light);
 
-            background: var(--light-bg);
+            font-style: italic;
         }
 
 
@@ -274,9 +276,9 @@
         }
 
 
-        /* =========================================
+        /* =========================
            ZONE DE SAISIE
-        ========================================= */
+        ========================= */
 
         .message-input {
             display: flex;
@@ -285,14 +287,16 @@
 
             padding: 12px;
 
-            border-top: 1px solid var(--border-color);
-
             background: white;
+
+            border-top: 1px solid var(--border-color);
         }
 
 
         #user-input {
             flex: 1;
+
+            min-width: 0;
 
             min-height: 50px;
 
@@ -304,6 +308,8 @@
 
             border-radius: 9px;
 
+            outline: none;
+
             font-family: inherit;
 
             font-size: 16px;
@@ -311,8 +317,6 @@
             color: var(--text-color);
 
             resize: vertical;
-
-            outline: none;
         }
 
 
@@ -329,13 +333,13 @@
 
             padding: 0 20px;
 
-            background: var(--primary-color);
-
-            color: white;
-
             border: none;
 
             border-radius: 9px;
+
+            background: var(--primary-color);
+
+            color: white;
 
             font-family: inherit;
 
@@ -368,9 +372,9 @@
         }
 
 
-        /* =========================================
+        /* =========================
            PIED DE PAGE
-        ========================================= */
+        ========================= */
 
         footer {
             margin-top: 15px;
@@ -383,9 +387,55 @@
         }
 
 
-        /* =========================================
+        /* =========================
+           MODE WEBADOR
+           
+           Quand l'URL contient :
+           ?embed=1
+
+           on cache le deuxième
+           "Marc — Assistant IA".
+        ========================= */
+
+        body.webador-mode .sp-chat-header {
+            display: none;
+        }
+
+
+        body.webador-mode {
+            max-width: none;
+
+            margin: 0;
+
+            padding: 0;
+
+            background: var(--light-bg);
+        }
+
+
+        body.webador-mode .chat-container {
+            width: 100%;
+
+            height: 100vh;
+
+            min-height: 0;
+
+            border: none;
+
+            border-radius: 0;
+
+            box-shadow: none;
+        }
+
+
+        body.webador-mode footer {
+            display: none;
+        }
+
+
+        /* =========================
            TÉLÉPHONE
-        ========================================= */
+        ========================= */
 
         @media (max-width: 600px) {
 
@@ -465,18 +515,59 @@
             }
         }
 
+
+        /* =========================
+           WEBADOR + TÉLÉPHONE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            body.webador-mode {
+                padding: 0;
+            }
+
+
+            body.webador-mode .chat-container {
+                height: 100vh;
+
+                min-height: 100vh;
+
+                border-radius: 0;
+            }
+
+
+            body.webador-mode .chat-messages {
+                padding: 12px;
+            }
+
+
+            body.webador-mode .message {
+                max-width: 90%;
+            }
+
+
+            body.webador-mode .message-input {
+                padding: 8px;
+            }
+
+        }
+
     </style>
+
 </head>
 
 
 <body>
 
 
-    <!-- =========================================
+    <!-- =========================
          EN-TÊTE DE MARC
-    ========================================== -->
+    ========================= -->
 
-    <header class="sp-chat-header">
+    <header
+        class="sp-chat-header"
+        id="internal-header"
+    >
 
         <div class="sp-chat-logo">
             🤖
@@ -493,14 +584,14 @@
     </header>
 
 
-    <!-- =========================================
+    <!-- =========================
          CHAT
-    ========================================== -->
+    ========================= -->
 
     <div class="chat-container">
 
 
-        <!-- MESSAGES -->
+        <!-- ZONE DES MESSAGES -->
 
         <div
             id="chat-messages"
@@ -509,17 +600,21 @@
 
             <div class="message assistant-message">
 
+                <p>Bonjour 👋</p>
+
                 <p>
-                    Bonjour 👋
+Je suis Marc, l'assistant IA officiel
+du Collège Saint-Pierre.
+                </p>
 
-                    Je suis Marc, l'assistant IA officiel
-                    du Collège Saint-Pierre.
+                <p>
+Je peux vous aider avec les informations
+du collège, la vie scolaire et les services
+numériques.
+                </p>
 
-                    Je peux vous aider avec les informations
-                    du collège, la vie scolaire et les services
-                    numériques.
-
-                    Comment puis-je vous aider ?
+                <p>
+Comment puis-je vous aider ?
                 </p>
 
             </div>
@@ -527,7 +622,7 @@
         </div>
 
 
-        <!-- INDICATEUR -->
+        <!-- INDICATEUR DE RÉPONSE -->
 
         <div
             class="typing-indicator"
@@ -548,7 +643,6 @@
                 autocomplete="off"
             ></textarea>
 
-
             <button
                 id="send-button"
                 type="button"
@@ -562,9 +656,9 @@
     </div>
 
 
-    <!-- =========================================
+    <!-- =========================
          PIED DE PAGE
-    ========================================== -->
+    ========================= -->
 
     <footer>
 
@@ -575,11 +669,29 @@
     </footer>
 
 
-    <!-- =========================================
-         SCRIPT DU CHAT
-    ========================================== -->
+    <!-- =========================
+         CHAT.JS
+    ========================= -->
 
     <script src="chat.js"></script>
+
+
+    <!-- =========================
+         DÉTECTION WEBADOR
+    ========================= -->
+
+    <script>
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        if (params.get("embed") === "1") {
+
+            document.body.classList.add("webador-mode");
+
+        }
+
+    </script>
 
 
 </body>
