@@ -9,6 +9,511 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <title>Marc — Assistant IA | Collège Saint-Pierre</title>
+
+    <style>
+        :root {
+            --primary-color: #315ee8;
+            --primary-hover: #244bc0;
+
+            --text-color: #172033;
+            --text-light: #687386;
+
+            --border-color: #dce1ea;
+
+            --page-bg: #f5f7fb;
+            --chat-bg: #ffffff;
+
+            --assistant-bg: #eef1f6;
+            --user-bg: #315ee8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Oxygen,
+                Ubuntu,
+                Cantarell,
+                sans-serif;
+
+            background: var(--page-bg);
+
+            color: var(--text-color);
+
+            line-height: 1.6;
+
+            padding: 20px;
+        }
+
+        /* =========================
+           EN-TÊTE
+           ========================= */
+
+        header {
+            width: 100%;
+            max-width: 900px;
+
+            margin: 0 auto 20px;
+
+            text-align: center;
+
+            padding: 10px 20px 20px;
+
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .assistant-title {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: var(--primary-color);
+        }
+
+        .assistant-logo {
+            font-size: 34px;
+        }
+
+        .school-name {
+            margin-top: 4px;
+
+            font-size: 17px;
+
+            color: var(--text-light);
+        }
+
+        /* =========================
+           CONTENEUR DU CHAT
+           ========================= */
+
+        .chat-container {
+            width: 100%;
+
+            max-width: 900px;
+
+            height: calc(100vh - 210px);
+
+            min-height: 500px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: var(--chat-bg);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* =========================
+           MESSAGES
+           ========================= */
+
+        .chat-messages {
+            flex: 1;
+
+            overflow-y: auto;
+
+            padding: 24px;
+
+            background: #fafbfc;
+        }
+
+        .message {
+            width: fit-content;
+
+            max-width: 80%;
+
+            margin-bottom: 16px;
+
+            padding: 14px 18px;
+
+            border-radius: 14px;
+
+            overflow-wrap: anywhere;
+        }
+
+        .message p {
+            margin: 0;
+
+            white-space: pre-line;
+
+            overflow-wrap: anywhere;
+        }
+
+        /* Message de Marc */
+
+        .assistant-message {
+            background: var(--assistant-bg);
+
+            color: var(--text-color);
+
+            margin-right: auto;
+        }
+
+        /* Message utilisateur */
+
+        .user-message {
+            background: var(--user-bg);
+
+            color: white;
+
+            margin-left: auto;
+        }
+
+        /* =========================
+           INDICATEUR DE RÉFLEXION
+           ========================= */
+
+        .typing-indicator {
+            display: none;
+
+            padding: 10px 20px;
+
+            color: var(--text-light);
+
+            font-style: italic;
+
+            background: white;
+        }
+
+        .typing-indicator.visible {
+            display: block;
+        }
+
+        /* =========================
+           ZONE DE SAISIE
+           ========================= */
+
+        .message-input {
+            display: flex;
+
+            gap: 10px;
+
+            padding: 12px;
+
+            background: white;
+
+            border-top: 1px solid var(--border-color);
+        }
+
+        #user-input {
+            flex: 1;
+
+            min-height: 48px;
+
+            max-height: 140px;
+
+            padding: 12px 14px;
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+            font-size: 16px;
+
+            color: var(--text-color);
+
+            background: white;
+
+            resize: none;
+
+            outline: none;
+        }
+
+        #user-input:focus {
+            border-color: var(--primary-color);
+
+            box-shadow:
+                0 0 0 2px rgba(49, 94, 232, 0.12);
+        }
+
+        #send-button {
+            min-width: 100px;
+
+            padding: 0 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: var(--primary-color);
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                opacity 0.2s ease;
+        }
+
+        #send-button:hover {
+            background: var(--primary-hover);
+        }
+
+        #send-button:disabled {
+            opacity: 0.6;
+
+            cursor: not-allowed;
+        }
+
+        /* =========================
+           PIED DE PAGE
+           ========================= */
+
+        footer {
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: 12px auto 0;
+
+            text-align: center;
+
+            color: var(--text-light);
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           VERSION TÉLÉPHONE
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 8px;
+            }
+
+            header {
+                margin-bottom: 10px;
+
+                padding: 8px 8px 14px;
+            }
+
+            .assistant-title {
+                font-size: 24px;
+
+                gap: 7px;
+            }
+
+            .assistant-logo {
+                font-size: 28px;
+            }
+
+            .school-name {
+                font-size: 15px;
+            }
+
+            .chat-container {
+                height: calc(100vh - 145px);
+
+                min-height: 450px;
+
+                border-radius: 10px;
+            }
+
+            .chat-messages {
+                padding: 14px;
+            }
+
+            .message {
+                max-width: 92%;
+
+                padding: 12px 14px;
+
+                font-size: 15px;
+            }
+
+            .message-input {
+                padding: 8px;
+
+                gap: 7px;
+            }
+
+            #user-input {
+                min-height: 46px;
+
+                font-size: 15px;
+            }
+
+            #send-button {
+                min-width: 80px;
+
+                padding: 0 12px;
+
+                font-size: 15px;
+            }
+
+            footer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =========================
+         EN-TÊTE UNIQUE
+         ========================= -->
+
+    <header>
+
+        <div class="assistant-title">
+
+            <span class="assistant-logo">
+                🤖
+            </span>
+
+            <span>
+                Marc — Assistant IA
+            </span>
+
+        </div>
+
+        <div class="school-name">
+            Collège Saint-Pierre
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CHAT
+         ========================= -->
+
+    <main class="chat-container">
+
+        <div
+            id="chat-messages"
+            class="chat-messages"
+        >
+
+            <!-- Message d'accueil de Marc -->
+
+            <div class="message assistant-message">
+
+                <p>
+                    Bonjour 👋<br><br>
+
+                    Je suis Marc, l'assistant IA officiel
+                    du Collège Saint-Pierre.<br><br>
+
+                    Je peux vous aider avec les informations
+                    du collège, la vie scolaire et les services
+                    numériques.<br><br>
+
+                    Comment puis-je vous aider ?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Marc réfléchit -->
+
+        <div
+            class="typing-indicator"
+            id="typing-indicator"
+        >
+            Marc réfléchit...
+        </div>
+
+
+        <!-- Zone de saisie -->
+
+        <div class="message-input">
+
+            <textarea
+                id="user-input"
+                placeholder="Écrivez votre message..."
+                rows="1"
+                autofocus
+            ></textarea>
+
+            <button
+                id="send-button"
+                type="button"
+            >
+                Envoyer
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         PIED DE PAGE
+         ========================= -->
+
+    <footer>
+
+        <p>
+            Marc — Assistant IA du Collège Saint-Pierre
+        </p>
+
+    </footer>
+
+
+    <!-- Fonctionnement du chat -->
+
+    <script src="chat.js"></script>
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <h1>🤖 Marc — Assistant IA</h1>
     <style>
         :root {
