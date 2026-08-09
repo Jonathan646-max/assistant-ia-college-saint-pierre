@@ -52,57 +52,9 @@
                 sans-serif;
 
             background: var(--page-bg);
-
             color: var(--text-color);
 
             line-height: 1.6;
-
-            padding: 20px;
-        }
-
-        /* =========================
-           EN-TÊTE
-           ========================= */
-
-        header {
-            width: 100%;
-            max-width: 900px;
-
-            margin: 0 auto 20px;
-
-            text-align: center;
-
-            padding: 10px 20px 20px;
-
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .assistant-title {
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 10px;
-
-            font-size: 30px;
-
-            font-weight: 700;
-
-            color: var(--primary-color);
-        }
-
-        .assistant-logo {
-            font-size: 34px;
-        }
-
-        .school-name {
-            margin-top: 4px;
-
-            font-size: 17px;
-
-            color: var(--text-light);
         }
 
         /* =========================
@@ -111,29 +63,19 @@
 
         .chat-container {
             width: 100%;
-
             max-width: 900px;
 
-            height: calc(100vh - 210px);
-
-            min-height: 500px;
+            height: 100vh;
+            min-height: 450px;
 
             margin: 0 auto;
 
             display: flex;
-
             flex-direction: column;
 
             background: var(--chat-bg);
 
-            border: 1px solid var(--border-color);
-
-            border-radius: 14px;
-
             overflow: hidden;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.08);
         }
 
         /* =========================
@@ -152,7 +94,6 @@
 
         .message {
             width: fit-content;
-
             max-width: 80%;
 
             margin-bottom: 16px;
@@ -182,7 +123,7 @@
             margin-right: auto;
         }
 
-        /* Message utilisateur */
+        /* Message de l'utilisateur */
 
         .user-message {
             background: var(--user-bg);
@@ -193,7 +134,7 @@
         }
 
         /* =========================
-           INDICATEUR DE RÉFLEXION
+           INDICATEUR
            ========================= */
 
         .typing-indicator {
@@ -232,7 +173,6 @@
             flex: 1;
 
             min-height: 48px;
-
             max-height: 140px;
 
             padding: 12px 14px;
@@ -296,59 +236,14 @@
         }
 
         /* =========================
-           PIED DE PAGE
-           ========================= */
-
-        footer {
-            width: 100%;
-
-            max-width: 900px;
-
-            margin: 12px auto 0;
-
-            text-align: center;
-
-            color: var(--text-light);
-
-            font-size: 13px;
-        }
-
-        /* =========================
-           VERSION TÉLÉPHONE
+           MOBILE
            ========================= */
 
         @media (max-width: 700px) {
 
-            body {
-                padding: 8px;
-            }
-
-            header {
-                margin-bottom: 10px;
-
-                padding: 8px 8px 14px;
-            }
-
-            .assistant-title {
-                font-size: 24px;
-
-                gap: 7px;
-            }
-
-            .assistant-logo {
-                font-size: 28px;
-            }
-
-            .school-name {
-                font-size: 15px;
-            }
-
             .chat-container {
-                height: calc(100vh - 145px);
-
-                min-height: 450px;
-
-                border-radius: 10px;
+                height: 100vh;
+                min-height: 400px;
             }
 
             .chat-messages {
@@ -382,10 +277,6 @@
 
                 font-size: 15px;
             }
-
-            footer {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -394,42 +285,19 @@
 <body>
 
     <!-- =========================
-         EN-TÊTE UNIQUE
-         ========================= -->
-
-    <header>
-
-        <div class="assistant-title">
-
-            <span class="assistant-logo">
-                🤖
-            </span>
-
-            <span>
-                Marc — Assistant IA
-            </span>
-
-        </div>
-
-        <div class="school-name">
-            Collège Saint-Pierre
-        </div>
-
-    </header>
-
-
-    <!-- =========================
          CHAT
          ========================= -->
 
     <main class="chat-container">
+
+        <!-- Messages -->
 
         <div
             id="chat-messages"
             class="chat-messages"
         >
 
-            <!-- Message d'accueil de Marc -->
+            <!-- Message d'accueil -->
 
             <div class="message assistant-message">
 
@@ -469,7 +337,7 @@
                 id="user-input"
                 placeholder="Écrivez votre message..."
                 rows="1"
-                autofocus
+                autocomplete="off"
             ></textarea>
 
             <button
@@ -484,20 +352,7 @@
     </main>
 
 
-    <!-- =========================
-         PIED DE PAGE
-         ========================= -->
-
-    <footer>
-
-        <p>
-            Marc — Assistant IA du Collège Saint-Pierre
-        </p>
-
-    </footer>
-
-
-    <!-- Fonctionnement du chat -->
+    <!-- Script du chat -->
 
     <script src="chat.js"></script>
 
