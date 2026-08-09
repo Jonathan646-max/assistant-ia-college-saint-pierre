@@ -1,183 +1,358 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>LLM Chat App</title>
-		<style>
-			:root {
-				--primary-color: #f6821f;
-				--primary-hover: #e67e22;
-				--light-bg: #f9fafb;
-				--border-color: #e5e7eb;
-				--text-color: #1f2937;
-				--text-light: #6b7280;
-				--user-msg-bg: #fff2e6;
-				--assistant-msg-bg: #f3f4f6;
-			}
+<!DOCTYPE html>
+<html lang="fr">
 
-			* {
-				box-sizing: border-box;
-				margin: 0;
-				padding: 0;
-			}
+<head>
+    <meta charset="UTF-8">
 
-			body {
-				font-family:
-					-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
-					Cantarell, sans-serif;
-				line-height: 1.6;
-				color: var(--text-color);
-				max-width: 800px;
-				margin: 0 auto;
-				padding: 1rem;
-			}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-			header {
-				text-align: center;
-				margin-bottom: 2rem;
-				padding: 1rem 0;
-				border-bottom: 1px solid var(--border-color);
-			}
+    <title>Assistant IA — Collège Saint-Pierre</title>
 
-			h1 {
-				font-size: 1.5rem;
-				color: var(--primary-color);
-			}
+    <style>
+        :root {
+            --primary-color: #315ee8;
+            --primary-hover: #244bc0;
+            --text-color: #222;
+            --text-light: #777;
+            --border-color: #ddd;
+            --light-bg: #f5f7fb;
+            --user-msg-bg: #315ee8;
+            --assistant-msg-bg: #f0f2f7;
+        }
 
-			.chat-container {
-				display: flex;
-				flex-direction: column;
-				height: calc(100vh - 200px);
-				min-height: 400px;
-				border: 1px solid var(--border-color);
-				border-radius: 8px;
-				overflow: hidden;
-			}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-			.chat-messages {
-				flex: 1;
-				overflow-y: auto;
-				padding: 1rem;
-				background-color: var(--light-bg);
-			}
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Oxygen,
+                Ubuntu,
+                Cantarell,
+                sans-serif;
 
-			.message {
-				margin-bottom: 1rem;
-				padding: 0.75rem;
-				border-radius: 8px;
-				max-width: 80%;
-			}
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--light-bg);
 
-			.message p {
-				white-space: pre-line;
-				margin: 0;
-				overflow-wrap: anywhere;
-			}
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
 
-			.user-message {
-				background-color: var(--user-msg-bg);
-				align-self: flex-end;
-				margin-left: auto;
-			}
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.2rem 0;
 
-			.assistant-message {
-				background-color: var(--assistant-msg-bg);
-				align-self: flex-start;
-			}
+            border-bottom: 1px solid var(--border-color);
+        }
 
-			.message-input {
-				display: flex;
-				padding: 0.75rem;
-				border-top: 1px solid var(--border-color);
-				background-color: white;
-			}
+        h1 {
+            font-size: 1.6rem;
+            color: var(--primary-color);
+        }
 
-			#user-input {
-				flex: 1;
-				padding: 0.75rem;
-				border: 1px solid var(--border-color);
-				border-radius: 4px;
-				font-family: inherit;
-				resize: none;
-				min-height: 44px;
-			}
+        header p {
+            margin-top: 0.3rem;
+            color: var(--text-light);
+        }
 
-			#send-button {
-				margin-left: 0.5rem;
-				padding: 0 1rem;
-				background-color: var(--primary-color);
-				color: white;
-				border: none;
-				border-radius: 4px;
-				cursor: pointer;
-				transition: background-color 0.2s;
-			}
+        .chat-container {
+            display: flex;
+            flex-direction: column;
 
-			#send-button:hover {
-				background-color: var(--primary-hover);
-			}
+            height: calc(100vh - 200px);
+            min-height: 400px;
 
-			#send-button:disabled {
-				background-color: var(--text-light);
-				cursor: not-allowed;
-			}
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
 
-			.typing-indicator {
-				display: none;
-				font-style: italic;
-				color: var(--text-light);
-				padding: 1rem;
-			}
+            overflow: hidden;
 
-			.typing-indicator.visible {
-				display: block;
-			}
+            background: white;
 
-			footer {
-				margin-top: 1rem;
-				text-align: center;
-				font-size: 0.85rem;
-				color: var(--text-light);
-			}
-		</style>
-	</head>
-	<body>
-		<header>
-			<h1>Cloudflare AI Chat</h1>
-			<p>Powered by Cloudflare Workers AI</p>
-		</header>
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.08);
+        }
 
-		<div class="chat-container">
-			<div id="chat-messages" class="chat-messages">
-				<div class="message assistant-message">
-					<p>
-						Hello! I'm an LLM chat app powered by Cloudflare Workers AI. How can
-						I help you today?
-					</p>
-				</div>
-			</div>
+        .chat-messages {
+            flex: 1;
 
-			<div class="typing-indicator" id="typing-indicator">
-				AI is thinking...
-			</div>
+            overflow-y: auto;
 
-			<div class="message-input">
-				<textarea
-					id="user-input"
-					placeholder="Type your message here..."
-					rows="1"
-					autofocus
-				></textarea>
-				<button id="send-button">Send</button>
-			</div>
-		</div>
+            padding: 1rem;
 
-		<footer>
-			<p>Cloudflare Workers AI Chat Template &copy; 2025</p>
-		</footer>
+            background-color: var(--light-bg);
+        }
 
-		<!-- Chat app script -->
-		<script src="chat.js"></script>
-	</body>
+        .message {
+            margin-bottom: 1rem;
+
+            padding: 0.75rem 1rem;
+
+            border-radius: 10px;
+
+            max-width: 80%;
+
+            overflow-wrap: anywhere;
+        }
+
+        .message p {
+            white-space: pre-line;
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .user-message {
+            background-color: var(--user-msg-bg);
+
+            color: white;
+
+            align-self: flex-end;
+
+            margin-left: auto;
+        }
+
+        .assistant-message {
+            background-color: var(--assistant-msg-bg);
+
+            align-self: flex-start;
+        }
+
+        .message-input {
+            display: flex;
+
+            padding: 0.75rem;
+
+            border-top: 1px solid var(--border-color);
+
+            background-color: white;
+
+            gap: 0.5rem;
+        }
+
+        #user-input {
+            flex: 1;
+
+            padding: 0.75rem;
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 6px;
+
+            font-family: inherit;
+
+            font-size: 1rem;
+
+            resize: none;
+
+            min-height: 44px;
+
+            outline: none;
+        }
+
+        #user-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        #send-button {
+            padding: 0 1.2rem;
+
+            background-color: var(--primary-color);
+
+            color: white;
+
+            border: none;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 1rem;
+
+            transition:
+                background-color 0.2s,
+                opacity 0.2s;
+        }
+
+        #send-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        #send-button:disabled {
+            background-color: var(--text-light);
+
+            cursor: not-allowed;
+
+            opacity: 0.7;
+        }
+
+        .typing-indicator {
+            display: none;
+
+            font-style: italic;
+
+            color: var(--text-light);
+
+            padding: 0.75rem 1rem;
+        }
+
+        .typing-indicator.visible {
+            display: block;
+        }
+
+        footer {
+            margin-top: 1rem;
+
+            text-align: center;
+
+            font-size: 0.85rem;
+
+            color: var(--text-light);
+        }
+
+        /* Version mobile */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 0.5rem;
+            }
+
+            header {
+                margin-bottom: 1rem;
+                padding: 0.8rem 0;
+            }
+
+            h1 {
+                font-size: 1.35rem;
+            }
+
+            .chat-container {
+                height: calc(100vh - 145px);
+
+                min-height: 450px;
+
+                border-radius: 10px;
+            }
+
+            .message {
+                max-width: 92%;
+
+                font-size: 0.95rem;
+            }
+
+            .message-input {
+                padding: 0.5rem;
+            }
+
+            #user-input {
+                font-size: 0.95rem;
+            }
+
+            #send-button {
+                padding: 0 1rem;
+            }
+
+            footer {
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <h1>
+            🤖 Assistant IA
+        </h1>
+
+        <p>
+            Collège Saint-Pierre
+        </p>
+
+    </header>
+
+
+    <div class="chat-container">
+
+        <div
+            id="chat-messages"
+            class="chat-messages"
+        >
+
+            <div class="message assistant-message">
+
+                <p>
+                    Bonjour 👋<br><br>
+
+                    Je suis l'assistant IA officiel
+                    du Collège Saint-Pierre.<br><br>
+
+                    Je peux vous aider avec les
+                    informations du collège,
+                    la vie scolaire et les services
+                    numériques.<br><br>
+
+                    Comment puis-je vous aider ?
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="typing-indicator"
+            id="typing-indicator"
+        >
+            L'assistant réfléchit...
+        </div>
+
+
+        <div class="message-input">
+
+            <textarea
+                id="user-input"
+                placeholder="Écrivez votre message..."
+                rows="1"
+                autofocus
+            ></textarea>
+
+            <button id="send-button">
+                Envoyer
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        <p>
+            Assistant IA — Collège Saint-Pierre
+        </p>
+
+    </footer>
+
+
+    <!-- Fonctionnement du chat -->
+
+    <script src="chat.js"></script>
+
+</body>
+
 </html>
